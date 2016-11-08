@@ -9,6 +9,7 @@ RUN apt-get update -y && \
     bash stack-install.sh --no-start --genhostid --force-hostid --write-gcm && \
     apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-VOLUME /opt/stackdriver/collectd/etc
+VOLUME /opt/stackdriver/collectd/etc/collectd.d
 
-CMD ["service stackdriver-agent restart; while true; do echo stackdriver-loop; sleep 60; done"]
+COPY run.sh /bin/run.sh
+ENTRYPOINT ["/bin/run.sh"]
